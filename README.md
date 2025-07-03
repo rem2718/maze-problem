@@ -1,33 +1,52 @@
-# Gymnasium Examples
-Some simple examples of Gymnasium environments and wrappers.
-For some explanations of these examples, see the [Gymnasium documentation](https://gymnasium.farama.org).
+# MAZE PROBLEM
 
-### Environments
-This repository hosts the examples that are shown [on the environment creation documentation](https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/).
-- `GridWorldEnv`: Simplistic implementation of gridworld environment
+![Maze RL Banner](https://cdn-images-1.medium.com/max/1200/1*zDM3vES4-mlPRk-o5_lxNQ.gif)
 
-### Wrappers
-This repository hosts the examples that are shown [on wrapper documentation](https://gymnasium.farama.org/api/wrappers/).
-- `ClipReward`: A `RewardWrapper` that clips immediate rewards to a valid range
-- `DiscreteActions`: An `ActionWrapper` that restricts the action space to a finite subset
-- `RelativePosition`: An `ObservationWrapper` that computes the relative position between an agent and a target
-- `ReacherRewardWrapper`: Allow us to weight the reward terms for the reacher environment
+This repository contains a series of tutorials introducing **Reinforcement Learning**, published as a mini-course on Medium. You can find the full course at this [link]().
 
-### Contributing
-If you would like to contribute, follow these steps:
-- Fork this repository
-- Clone your fork
-- Set up pre-commit via `pre-commit install`
-
-PRs may require accompanying PRs in [the documentation repo](https://github.com/Farama-Foundation/Gymnasium/tree/main/docs).
+Each tutorial in this repo is a practical exercise that corresponds to a story on Medium. The tutorials rely on the **[Gymnasium](https://gymnasium.farama.org/)** library.
 
 
 ## Installation
 
-To install your new environment, run the following commands:
+1. Clone this repository
 
-```{shell}
-cd gymnasium_env
-pip install -e .
+```shell
+git clone https://github.com/rem2718/maze-problem
+cd maze-problem
+````
+
+2. Create and activate a virtual environment
+
+```shell
+python -m venv venv
+venv\Scripts\activate #for windows
+source venv/bin/activate #for macOS/Linux
 ```
+
+3. Install required packages
+
+```shell
+pip install -r requirements.txt
+```
+
+4. Navigate to the tutorial you want to run
+
+```shell
+cd tutorial-X
+```
+
+5. Run the code
+
+```shell
+python run.py
+```
+
+---
+
+Thanks for exploring this project!  
+hope it sparks your curiosity and motivates you to keep building, learning, and experimenting with reinforcement learning & AI  
+**You've got this!** 
+
+**—Rem E 🧠⚡🤖**
 

@@ -66,9 +66,11 @@ class MazeEnv(gym.Env):
 
     def step(self, action):
         direction = self._action_to_direction[action]
+        
         self._agent_location = np.clip(
             self._agent_location + direction, 0, self.size - 1
         )
+        
         terminated = np.array_equal(self._agent_location, self._target_location)
         reward = 1 if terminated else 0 
         observation = self._get_obs()
@@ -79,33 +81,25 @@ class MazeEnv(gym.Env):
 
         return observation, reward, terminated, False, info
 
-    def render(self):
-        if self.render_mode == "rgb_array":
-            return self._render_frame()
-
+    def _init_frame(self, pix_square_size):
+        pygame.init()
+        pygame.display.init()
+        self.window = pygame.display.set_mode((self.window_size, self.window_size))
+        self.clock = pygame.time.Clock()
+        self.agent_image = pygame.transform.scale(pygame.image.load("images/robot.png").convert_alpha(), (pix_square_size/1.1, pix_square_size/1.5))
+        self.target_image = pygame.transform.scale(pygame.image.load("images/batteries.png").convert_alpha(), (pix_square_size/1.1, pix_square_size/1.5))
+        
     def _render_frame(self):
+        pix_square_size =  (self.window_size / self.size)
+        
         if self.window is None and self.render_mode == "human":
-            pygame.init()
-            pygame.display.init()
-            self.window = pygame.display.set_mode((self.window_size, self.window_size))
-        if self.clock is None and self.render_mode == "human":
-            self.clock = pygame.time.Clock()
+            self._init_frame(pix_square_size)
 
         canvas = pygame.Surface((self.window_size, self.window_size))
         canvas.fill((55, 83 , 104))
-        pix_square_size =  (self.window_size / self.size)
         
-        if self.agent_image is None and self.render_mode == "human":
-            self.agent_image = pygame.transform.scale(pygame.image.load("images/robot.png").convert_alpha(), (pix_square_size/1.1, pix_square_size/1.5))
-        
-        if self.target_image is None and self.render_mode == "human":
-            self.target_image = pygame.transform.scale(pygame.image.load("images/batteries.png").convert_alpha(), (pix_square_size/1.1, pix_square_size/1.5))
-        
-        x, y = self._target_location
-        canvas.blit(self.target_image, ( (x+0.05)  * pix_square_size, (y+0.15) * pix_square_size))
-
-        x, y = self._agent_location 
-        canvas.blit(self.agent_image, ( (x+0.05)  * pix_square_size, (y+0.15) * pix_square_size))
+        canvas.blit(self.target_image, ((self._target_location[0] + 0.05)  * pix_square_size, (self._target_location[1] + 0.15) * pix_square_size))
+        canvas.blit(self.agent_image, ((self._agent_location[0] + 0.05)  * pix_square_size, (self._agent_location[1] + 0.15) * pix_square_size))
 
         for x in range(self.size + 1):
             pygame.draw.line(
@@ -123,15 +117,11 @@ class MazeEnv(gym.Env):
                 width=3,
             )
 
-        if self.render_mode == "human":
-            self.window.blit(canvas, canvas.get_rect())
-            pygame.event.pump()
-            pygame.display.update()
-            self.clock.tick(self.metadata["render_fps"])
-        else: 
-            return np.transpose(
-                np.array(pygame.surfarray.pixels3d(canvas)), axes=(1, 0, 2)
-            )
+        self.window.blit(canvas, canvas.get_rect())
+        pygame.event.pump()
+        pygame.display.update()
+        self.clock.tick(self.metadata["render_fps"])
+        
 
     def close(self):
         if self.window is not None:
