@@ -12,9 +12,9 @@ mdp = MDP(env.unwrapped)
 values = mdp.iterative_values()
 env.unwrapped.set_values(values)
 
-# agent = RandomAgent(env, values)
+agent = RandomAgent(env)
 # agent = GreedyAgent(env, values, epsilon=0.1)
-agent = SoftmaxAgent(env, values, temperature=0.1)
+# agent = SoftmaxAgent(env, values, temperature=0.1)
 
 episode_over = False
 
@@ -22,5 +22,3 @@ while not episode_over:
     action = agent.get_action(observation["agent"])
     observation, reward, terminated, truncated, info = env.step(action)
     episode_over = terminated or truncated
-
-env.close()

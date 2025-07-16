@@ -92,6 +92,9 @@ class MazeEnv(gym.Env):
         info = self._get_info()
         return observation, reward, terminated, False, info
 
+    def set_values(self, values):
+        self.values = values
+        
     def _init_frame(self, pix_square_size):
         pygame.init()
         pygame.display.init()
@@ -161,9 +164,6 @@ class MazeEnv(gym.Env):
         pygame.event.pump()
         pygame.display.update()
         self.clock.tick(self.metadata["render_fps"])
-
-    def set_values(self, values):
-        self.values = values
         
     def close(self):
         if self.window is not None:
