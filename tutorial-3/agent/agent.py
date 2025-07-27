@@ -18,3 +18,5 @@ class Agent:
     def get_action(self, s):
         pass
 
+    def update(self, s, a, r, nxt_s, over):
+        pass

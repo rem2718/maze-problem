@@ -16,8 +16,10 @@ for ep in range(total_episodes):
 
     while not episode_over:
         action = agent.get_action(state)
-        state, reward, terminated, truncated, _ = env.step(action)
+        next_state, reward, terminated, truncated, _ = env.step(action)
         episode_over = terminated or truncated
+        agent.update(state, action, reward, next_state, episode_over)
+        state = next_state
         t += 1
 
     print(f"Episode {ep + 1} finished")
