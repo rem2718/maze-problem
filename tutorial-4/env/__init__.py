@@ -1,5 +1,5 @@
 from gymnasium.envs.registration import register
-from env import Env
+from env import MazeEnv
 
 register(
     id="maze_env/Maze-v0",
