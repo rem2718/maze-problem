@@ -7,7 +7,7 @@ import env
 env = gymnasium.make("env/Maze-v0", render_mode="human", reg_r=-1)
 agent = Agent(env.unwrapped)
 
-total_episodes = 4 
+total_episodes = 5 
 
 for ep in range(total_episodes):
     state, _ = env.reset(seed=1221)
