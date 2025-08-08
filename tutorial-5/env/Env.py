@@ -125,6 +125,23 @@ class MazeEnv(gym.Env):
         canvas = pygame.Surface((self.window_size, self.window_size))
         canvas.fill(block_color)  
 
+        for row in range(self.size):
+            for col in range(self.size):
+                if np.isnan(self.rewards[row, col]):
+                    continue
+                rect = pygame.Rect(
+                    (col + 1) * pix_square_size,
+                    (row + 1) * pix_square_size,
+                    pix_square_size,
+                    pix_square_size
+                )
+                pygame.draw.rect(canvas, grid_color, rect)
+                value = self.values[row, col]
+                if np.isnan(value):
+                    continue
+                text = self.font.render(str(int(value)), True, (255, 255, 255))  
+                canvas.blit(text, ((col+1.1) * pix_square_size, (row+1.1) * pix_square_size) )
+
         canvas.blit(
             self.target_image,
             ((self._target_location[1] + 1 + 0.05) * pix_square_size,
@@ -156,3 +173,6 @@ class MazeEnv(gym.Env):
         pygame.event.pump()
         pygame.display.update()
         self.clock.tick(self.metadata["render_fps"])
+        
+    def set_values(self, values):
+        self.values = values

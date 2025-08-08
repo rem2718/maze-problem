@@ -1,7 +1,7 @@
 from gymnasium.envs.registration import register
-from env import Env
+from env.Env import Env
 
 register(
     id="env/EnvName-v0",
-    entry_point="env:EnvName",
+    entry_point="env.Env:Env",
 )

@@ -1,7 +1,7 @@
 from gymnasium.envs.registration import register
-from env import MazeEnv
+from env.Env import Env
 
 register(
-    id="maze_env/Maze-v0",
-    entry_point="maze_env:MazeEnv",
+    id="env/EnvName-v0",
+    entry_point="env.Env:Env",
 )

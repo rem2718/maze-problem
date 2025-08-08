@@ -1,7 +1,7 @@
 import gymnasium
 
-from agent import Agent
-import env
+from agent.agent import Agent
+from env import Env
 
 
 env = gymnasium.make("env/name-v0")
