@@ -11,11 +11,7 @@ class Agent:
         self.states = [(x, y) for x in range(env.size) for y in range(env.size) if not np.isnan(self._immediate_reward((x, y)))]
         self.actions = list(env.unwrapped._action_to_direction.values())
         self.values = np.full((env.size, env.size), np.nan, dtype=float)
-        self.policy = {
-            (x, y): [1.0 / env.action_space.n] * env.action_space.n
-            for x in range(env.size)
-            for y in range(env.size)
-        }
+        self.policy = {s : [1.0 / env.action_space.n] * env.action_space.n for s in self.states}
         self._iterativeDP()
         
     def _V(self, s):
