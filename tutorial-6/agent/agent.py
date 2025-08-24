@@ -36,7 +36,6 @@ class Agent:
         return self._policy(s)
 
     def update(self, s, a, r, nxt_s, over):
-        print(r)
         self.values[s[0], s[1]] = r + self.gamma * self._V(nxt_s)
     
     def get_values(self):
