@@ -1,13 +1,12 @@
 import gymnasium
-import time
 
-from agent.agent import Agent
+from agent.agent import OffAgent
 import env
 
 
 env = gymnasium.make("env/Maze-v0", render_mode=None, reg_r=-1, tar_r=56)
 env.reset(seed=1221)
-agent = Agent(env.unwrapped, first_visit=False, ars=True)
+agent = OffAgent(env.unwrapped, ars=True)
 values = agent.get_values()
 env.unwrapped.set_values(values)
 
@@ -36,6 +35,7 @@ for i in range(max_iterations):
 env = gymnasium.make("env/Maze-v0", render_mode="human", reg_r=-1, tar_r=56)
 env.reset(seed=1221)
 env.unwrapped.set_values(values)
+agent.train = False
 while not episode_over:
     action = agent.get_action(state['agent'])
     next_state, reward, terminated, truncated, _ = env.step(action)
